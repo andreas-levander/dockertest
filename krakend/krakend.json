@@ -23,7 +23,32 @@
       "input_headers": [
         "*"
       ]
-    }
+    }, {
+    "endpoint": "/v1/prot",
+    "method": "GET",
+    "extra_config": {
+      "auth/validator": {
+          "alg": "PS256",
+          "jwk_url": "http://130.232.178.29:4000/verify",
+          "cache": true,
+          "disable_jwk_security": true
+      }
+    },
+    "backend": [
+      {
+        "url_pattern": "/api/prot",
+        "sd": "static",
+        "method": "GET",
+        "host": [
+          "http://130.232.178.29:3000"
+        ],
+        "disable_host_sanitize": false
+      }
+    ],
+    "input_headers": [
+      "*"
+    ]
+  }
   ],
   "extra_config": {
     "security/cors": {

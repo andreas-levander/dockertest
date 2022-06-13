@@ -9,4 +9,11 @@ router.get("/api/test", (context) => {
   };
 });
 
+router.get("/api/prot", (context) => {
+  context.response.body = {
+    success: true,
+    msg: "protected Hello World",
+  };
+});
+
 export default router;
