@@ -1,14 +1,10 @@
-import { serve } from "./deps.ts";
+import { Application } from "./deps.ts";
+import router from "./routes.ts";
 
-const port = 8080;
+const app = new Application();
+app.use(router.routes());
+app.use(router.allowedMethods());
 
-const handler = (request: Request): Response => {
-  const body = `Your user-agent is:\n\n${
-    request.headers.get("user-agent") ?? "Unknown"
-  }`;
+console.log(`Server running on port 3000`);
 
-  return new Response(body, { status: 200 });
-};
-
-console.log(`HTTP webserver running. Access it at: http://localhost:8080/`);
-await serve(handler, { port });
+await app.listen({ port: 3000 });

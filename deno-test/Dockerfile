@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 FROM denoland/deno:latest
 
-EXPOSE 8080
+EXPOSE 3000
 WORKDIR /app
 USER deno
 COPY deps.ts .

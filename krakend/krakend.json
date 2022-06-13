@@ -1,0 +1,47 @@
+{
+  "$schema": "https://www.krakend.io/schema/v3.json",
+  "version": 3,
+  "name": "KrakenD - API Gateway test",
+  "timeout": "3000ms",
+  "cache_ttl": "300s",
+  "output_encoding": "json",
+  "endpoints": [
+    {
+      "endpoint": "/v1/test",
+      "method": "GET",
+      "backend": [
+        {
+          "url_pattern": "/api/test",
+          "sd": "static",
+          "method": "GET",
+          "host": [
+            "http://130.232.178.29:3000"
+          ],
+          "disable_host_sanitize": false
+        }
+      ],
+      "input_headers": [
+        "*"
+      ]
+    }
+  ],
+  "extra_config": {
+    "security/cors": {
+      "allow_origins": [
+        "*"
+      ],
+      "expose_headers": [
+        "Content-Length"
+      ],
+      "max_age": "12h",
+      "allow_methods": [
+        "GET",
+        "HEAD",
+        "POST"
+      ],
+      "allow_headers": [
+        "*"
+      ]
+    }
+  }
+}
