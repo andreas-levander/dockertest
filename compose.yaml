@@ -1,0 +1,33 @@
+services:
+  deno-jwt:
+    build: ./deno-jwt
+    ports:
+      - "4000:4000"
+  deno-backend:
+    build: ./deno-test
+    ports:
+      - "3000:3000"
+  krakend:
+    image: devopsfaith/krakend:latest
+    volumes:
+      - ./krakend/config:/etc/krakend
+    ports:
+      - "8080:8080"
+      - "8090:8090"
+    command: ["run", "-d", "-c", "/etc/krakend/krakend.json"]
+  influxdb:
+    image: influxdb:1.8
+    environment:
+      - "INFLUXDB_DB=krakend"
+      - "INFLUXDB_USER=krakend-dev"
+      - "INFLUXDB_USER_PASSWORD=pas5w0rd"
+      - "INFLUXDB_ADMIN_USER=admin"
+      - "INFLUXDB_ADMIN_PASSWORD=supersecretpassword"
+    ports:
+      - "8086:8086"
+    volumes:
+      - ./influxdb/data:/var/lib/influxdb
+  grafana:
+    build: ./grafana
+    ports:
+      - "3001:3000"
