@@ -60,22 +60,6 @@
         }
       ],
       "input_headers": ["*"]
-    },
-    {
-      "endpoint": "/v1/grafana",
-      "output_encoding": "no-op",
-      "method": "GET",
-      "backend": [
-        {
-          "url_pattern": "/",
-          "sd": "static",
-          "encoding": "no-op",
-          "method": "GET",
-          "host": ["http://grafana:3001"],
-          "disable_host_sanitize": false
-        }
-      ],
-      "input_headers": ["*"]
     }
   ],
   "extra_config": {
@@ -101,6 +85,16 @@
       "backend_disabled": false,
       "endpoint_disabled": false,
       "listen_address": ":8090"
+    },
+    "telemetry/opencensus": {
+      "sample_rate": 100,
+      "reporting_period": 1,
+      "exporters": {
+        "jaeger": {
+          "endpoint": "http://jaeger:14268/api/traces",
+          "service_name": "krakend"
+        }
+      }
     }
   }
 }

@@ -7,5 +7,6 @@ USER deno
 COPY deps.ts .
 RUN deno cache deps.ts
 COPY . .
+RUN deno cache server.ts
 CMD ["run","--allow-all","server.ts"]
 

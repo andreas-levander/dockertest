@@ -27,6 +27,6 @@ router.get("/verify", (context) => {
   };
 });
 
-console.log(publicJwk);
+//console.log(publicJwk);
 
 export default router;
