@@ -33,7 +33,9 @@
           "alg": "PS256",
           "jwk_url": "http://deno-jwt:4000/verify",
           "cache": true,
-          "disable_jwk_security": true
+          "disable_jwk_security": true,
+          "roles_key": "roles",
+          "roles": ["admin"]
         }
       },
       "backend": [
