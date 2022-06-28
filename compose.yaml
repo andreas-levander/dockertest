@@ -1,19 +1,20 @@
 services:
-  deno-jwt:
-    build: ./deno-jwt
-    ports:
-      - "4000:4000"
   deno-backend:
     build: ./deno-test
     ports:
       - "3000:3000"
   krakend:
-    image: devopsfaith/krakend:latest
-    volumes:
-      - ./krakend/config:/etc/krakend
+    image: devopsfaith/krakend:watch
+    depends_on:
+      - influxdb
     ports:
       - "8080:8080"
       - "8090:8090"
+    environment:
+      - FC_ENABLE=1
+      - FC_PARTIALS="/etc/krakend/partials"
+    volumes:
+      - ./krakend/config:/etc/krakend
     command: ["run", "-d", "-c", "/etc/krakend/krakend.json"]
   influxdb:
     image: influxdb:1.8
@@ -29,6 +30,8 @@ services:
       - ./influxdb/data:/var/lib/influxdb
   grafana:
     build: ./grafana
+    depends_on:
+      - influxdb
     ports:
       - "3001:3000"
   jaeger:

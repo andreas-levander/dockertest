@@ -12,58 +12,37 @@
   },
   "endpoints": [
     {
-      "endpoint": "/v1/test",
-      "method": "GET",
-      "backend": [
+    "endpoint": "/v1/test",
+    "backend": [
         {
-          "url_pattern": "/api/test",
-          "sd": "static",
-          "method": "GET",
-          "host": ["http://deno-backend:3000"],
-          "disable_host_sanitize": false
+            "url_pattern": "/api/test",
+            "method": "GET",
+            "host": ["http://deno-backend:3000"]
         }
-      ],
-      "input_headers": ["*"]
-    },
-    {
-      "endpoint": "/v1/prot",
-      "method": "GET",
-      "extra_config": {
-        "auth/validator": {
-          "alg": "PS256",
-          "jwk_url": "http://deno-jwt:4000/verify",
-          "cache": true,
-          "disable_jwk_security": true,
-          "roles_key": "roles",
-          "roles": ["admin"]
-        }
-      },
-      "backend": [
-        {
-          "url_pattern": "/api/prot",
-          "sd": "static",
-          "method": "GET",
-          "host": ["http://deno-backend:3000"],
-          "disable_host_sanitize": false
-        }
-      ],
-      "input_headers": ["*"]
-    },
-    {
-      "endpoint": "/v1/token",
-      "method": "GET",
-      "backend": [
-        {
-          "url_pattern": "/token",
-          "sd": "static",
-          "method": "GET",
-          "host": ["http://deno-jwt:4000"],
-          "disable_host_sanitize": false
-        }
-      ],
-      "input_headers": ["*"]
+    ],
+    "input_headers": ["*"],
+    "extra_config": {
+      "auth/validator": {
+        {{ include "auth.tmpl" }},
+        "roles": ["admin"]
+      }
     }
-  ],
+
+  },
+  {
+    "endpoint": "/v1/auth",
+    "method": "POST",
+    "backend": [
+        {
+            "url_pattern": "/v1/api/public/login",
+            "method": "POST",
+            "host": ["http://130.232.178.29:4000"]
+        }
+    ],
+    "input_headers": ["*"]
+
+  }
+],
   "extra_config": {
     "security/cors": {
       "allow_origins": ["*"],
