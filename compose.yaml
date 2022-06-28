@@ -10,9 +10,6 @@ services:
     ports:
       - "8080:8080"
       - "8090:8090"
-    environment:
-      - FC_ENABLE=1
-      - FC_PARTIALS="/etc/krakend/partials"
     volumes:
       - ./krakend/config:/etc/krakend
     command: ["run", "-d", "-c", "/etc/krakend/krakend.json"]
